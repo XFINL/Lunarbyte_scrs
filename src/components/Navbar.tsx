@@ -28,11 +28,11 @@ export default function Navbar() {
           className={cn(
             'flex items-center gap-1 px-3 py-2',
             'rounded-[28px]',
-            'bg-white/80 dark:bg-white/10 backdrop-blur-2xl',
-            'border border-black/10 dark:border-white/10',
-            'shadow-[0_8px_32px_rgba(0,0,0,0.08)] dark:shadow-[0_8px_32px_rgba(0,0,0,0.3)]',
+            'bg-white/5 backdrop-blur-2xl',
+            'border border-white/10',
+            'shadow-[0_8px_32px_rgba(0,0,0,0.08)]',
             'transition-all duration-300',
-            scrolled && 'shadow-[0_8px_40px_rgba(0,0,0,0.12)] dark:shadow-[0_8px_40px_rgba(0,0,0,0.4)]'
+            scrolled && 'shadow-[0_8px_40px_rgba(0,0,0,0.12)]'
           )}
         >
           <Link
@@ -79,9 +79,9 @@ export default function Navbar() {
           className={cn(
             'flex items-center justify-around px-4 py-2',
             'rounded-[28px] mx-3 w-full max-w-sm',
-            'bg-white/80 dark:bg-white/10 backdrop-blur-2xl',
-            'border border-black/10 dark:border-white/10',
-            'shadow-[0_-4px_24px_rgba(0,0,0,0.06)] dark:shadow-[0_-4px_24px_rgba(0,0,0,0.2)]'
+            'bg-white/5 backdrop-blur-2xl',
+            'border border-white/10',
+            'shadow-[0_-4px_24px_rgba(0,0,0,0.06)]'
           )}
         >
           <Link
