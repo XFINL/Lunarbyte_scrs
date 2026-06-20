@@ -19,6 +19,7 @@ export interface Site {
   createdAt: string;
   visitCount: number;
   isRecommended: boolean;
+  isVerified: boolean;
 }
 
 export interface SubmitForm {

@@ -46,8 +46,16 @@ export default function Detail() {
             />
           </div>
           <div className="flex-1 min-w-0">
-            <h1 className="text-xl md:text-2xl font-bold text-black dark:text-white mb-2">{site.name}</h1>
-            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed">{site.description}</p>
+            <div className="flex items-center gap-2 flex-wrap">
+              <h1 className="text-xl md:text-2xl font-bold text-black dark:text-white">{site.name}</h1>
+              {site.isVerified && (
+                <span className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-black/10 dark:bg-white/15 text-gray-600 dark:text-gray-300 font-medium">
+                  <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/></svg>
+                  已认证
+                </span>
+              )}
+            </div>
+            <p className="text-sm text-gray-500 dark:text-gray-400 leading-relaxed mt-2">{site.description}</p>
           </div>
         </div>
 

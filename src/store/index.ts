@@ -67,6 +67,7 @@ export const useStore = create<Store>((set, get) => ({
       createdAt: new Date().toISOString().split('T')[0],
       visitCount: 0,
       isRecommended: false,
+      isVerified: false,
     };
     set((s) => ({ sites: [newSite, ...s.sites] }));
   },

@@ -119,12 +119,20 @@ export default function Home() {
         return (
           <section key={category.id}>
             <div className="flex items-center justify-between mb-4">
-              <h2 className="text-lg md:text-xl font-bold text-black dark:text-white">
-                {category.name}
-              </h2>
-              <span className="text-xs text-gray-400 dark:text-gray-500">
-                {categorySites.length} 个站点
-              </span>
+              <div className="flex items-center gap-3">
+                <h2 className="text-lg md:text-xl font-bold text-black dark:text-white">
+                  {category.name}
+                </h2>
+                <span className="text-xs text-gray-400 dark:text-gray-500">
+                  {categorySites.length} 个站点
+                </span>
+              </div>
+              <a
+                href={`/category/${category.id}`}
+                className="flex items-center gap-1 text-xs md:text-sm text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white transition-colors"
+              >
+                查看更多 <ArrowRight size={12} />
+              </a>
             </div>
             <p className="text-sm text-gray-500 dark:text-gray-400 mb-5">{category.description}</p>
 
