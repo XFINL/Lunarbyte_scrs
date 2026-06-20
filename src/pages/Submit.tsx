@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import { Send, CheckCircle } from 'lucide-react';
 import { useStore } from '@/store';
 import GlassCard from '@/components/GlassCard';
+import CustomSelect from '@/components/CustomSelect';
 
 export default function Submit() {
   const navigate = useNavigate();
@@ -92,25 +93,19 @@ export default function Submit() {
 
           <div className="space-y-1.5">
             <label className="text-xs font-medium text-gray-500 dark:text-gray-400">分类 *</label>
-            <select
-              required
+            <CustomSelect
+              options={[
+                ...categories.map((cat) => ({ value: cat.id, label: cat.name })),
+                { value: '__other__', label: '其他' },
+              ]}
               value={form.categoryId}
-              onChange={(e) => {
-                const val = e.target.value;
+              onChange={(val) => {
                 setForm({ ...form, categoryId: val });
                 setIsOther(val === '__other__');
                 if (val !== '__other__') setCustomCategory('');
               }}
-              className="w-full h-10 px-4 rounded-xl bg-white/80 dark:bg-white/10
-                border border-black/10 dark:border-white/10 text-black dark:text-white text-sm
-                outline-none focus:border-black/30 dark:focus:border-white/30 transition-colors appearance-none"
-            >
-              <option value="" disabled>选择分类</option>
-              {categories.map((cat) => (
-                <option key={cat.id} value={cat.id} className="bg-white dark:bg-gray-900">{cat.name}</option>
-              ))}
-              <option value="__other__" className="bg-white dark:bg-gray-900">其他</option>
-            </select>
+              placeholder="选择分类"
+            />
             {isOther && (
               <input
                 required

@@ -2,7 +2,7 @@ import { Search, X } from 'lucide-react';
 import { useStore } from '@/store';
 
 export default function SearchBar() {
-  const { searchQuery, setSearchQuery, setSearchFocused } = useStore();
+  const { searchQuery, setSearchQuery } = useStore();
 
   return (
     <div className="relative w-full max-w-2xl mx-auto">
@@ -15,8 +15,6 @@ export default function SearchBar() {
           type="text"
           value={searchQuery}
           onChange={(e) => setSearchQuery(e.target.value)}
-          onFocus={() => setSearchFocused(true)}
-          onBlur={() => setSearchFocused(false)}
           placeholder="搜索站点名称、描述或标签..."
           className="w-full h-12 pl-11 pr-10 rounded-2xl
             bg-white/80 dark:bg-white/10 backdrop-blur-xl
