@@ -8,10 +8,14 @@ interface Store {
   searchQuery: string;
   selectedCategory: string | null;
   theme: 'dark' | 'light';
+  language: 'zh' | 'en';
   isAuthenticated: boolean;
+  searchFocused: boolean;
   setSearchQuery: (query: string) => void;
   setSelectedCategory: (id: string | null) => void;
+  setSearchFocused: (focused: boolean) => void;
   toggleTheme: () => void;
+  toggleLanguage: () => void;
   submitSite: (form: SubmitForm) => void;
   approveSite: (id: string) => void;
   rejectSite: (id: string) => void;
@@ -32,16 +36,23 @@ export const useStore = create<Store>((set, get) => ({
   searchQuery: '',
   selectedCategory: null,
   theme: 'dark',
+  language: 'zh',
   isAuthenticated: false,
+  searchFocused: false,
 
   setSearchQuery: (query) => set({ searchQuery: query }),
   setSelectedCategory: (id) => set({ selectedCategory: id }),
+  setSearchFocused: (focused) => set({ searchFocused: focused }),
 
   toggleTheme: () => {
     const next = get().theme === 'dark' ? 'light' : 'dark';
     set({ theme: next });
     document.documentElement.classList.remove('dark', 'light');
     document.documentElement.classList.add(next);
+  },
+
+  toggleLanguage: () => {
+    set({ language: get().language === 'zh' ? 'en' : 'zh' });
   },
 
   login: (password) => {

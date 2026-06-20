@@ -73,11 +73,13 @@ export default function Home() {
           {/* Search form */}
           <form onSubmit={handleSearch} className="w-full max-w-xl">
             <div className="relative flex items-center">
-              <Search size={18} className="absolute left-4 text-gray-400 dark:text-gray-500 pointer-events-none" />
+              <Search size={20} className="absolute left-4 text-gray-400 dark:text-gray-500 pointer-events-none z-10" />
               <input
                 type="text"
                 value={searchValue}
                 onChange={(e) => setSearchValue(e.target.value)}
+                onFocus={() => useStore.getState().setSearchFocused(true)}
+                onBlur={() => useStore.getState().setSearchFocused(false)}
                 placeholder="搜索你想要的网站..."
                 className="w-full h-12 md:h-14 pl-11 pr-4 rounded-2xl
                   bg-white/80 dark:bg-white/10 backdrop-blur-2xl

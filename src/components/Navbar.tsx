@@ -5,7 +5,7 @@ import { cn } from '@/lib/utils';
 
 export default function Navbar() {
   const location = useLocation();
-  const { theme, toggleTheme } = useStore();
+  const { theme, toggleTheme, language, toggleLanguage, searchFocused } = useStore();
   const [scrolled, setScrolled] = useState(false);
 
   useEffect(() => {
@@ -25,7 +25,8 @@ export default function Navbar() {
           'border border-black/10 dark:border-white/10',
           'shadow-2xl shadow-black/10',
           'transition-all duration-300',
-          scrolled && 'mt-2'
+          scrolled && 'mt-2',
+          searchFocused && 'opacity-0 -translate-y-4 pointer-events-none'
         )}
       >
         <div className="flex items-center gap-1">
@@ -38,7 +39,7 @@ export default function Navbar() {
                 : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10'
             )}
           >
-            首页
+            {language === 'zh' ? '首页' : 'Home'}
           </Link>
           <Link
             to="/submit"
@@ -49,14 +50,22 @@ export default function Navbar() {
                 : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10'
             )}
           >
-            提交
+            {language === 'zh' ? '提交' : 'Submit'}
           </Link>
+          <div className="mx-1 w-px h-5 bg-black/10 dark:bg-white/10" />
+          <button
+            onClick={toggleLanguage}
+            className="px-2 py-1.5 rounded-xl text-xs font-medium text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all duration-200"
+            aria-label="切换语言"
+          >
+            {language === 'zh' ? 'EN' : '中'}
+          </button>
           <button
             onClick={toggleTheme}
-            className="ml-2 p-2 rounded-xl text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all duration-200"
+            className="p-2 rounded-xl text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all duration-200"
             aria-label="切换主题"
           >
-            {theme === 'dark' ? '明亮' : '暗色'}
+            {theme === 'dark' ? (language === 'zh' ? '明亮' : 'Light') : (language === 'zh' ? '暗色' : 'Dark')}
           </button>
         </div>
       </nav>
@@ -67,7 +76,9 @@ export default function Navbar() {
           'md:hidden fixed bottom-0 left-0 right-0 z-50',
           'px-3 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]',
           'bg-white/10 dark:bg-white/5 backdrop-blur-2xl',
-          'border-t border-black/10 dark:border-white/10'
+          'border-t border-black/10 dark:border-white/10',
+          'transition-all duration-300',
+          searchFocused && 'translate-y-full opacity-0'
         )}
       >
         <div className="flex items-center justify-around">
@@ -81,7 +92,7 @@ export default function Navbar() {
             <div className={cn('p-1.5 rounded-lg', location.pathname === '/' && 'bg-black/10 dark:bg-white/15')}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
             </div>
-            <span className="text-[10px] font-medium">首页</span>
+            <span className="text-[10px] font-medium">{language === 'zh' ? '首页' : 'Home'}</span>
           </Link>
           <Link
             to="/submit"
@@ -93,8 +104,17 @@ export default function Navbar() {
             <div className={cn('p-1.5 rounded-lg', location.pathname === '/submit' && 'bg-black/10 dark:bg-white/15')}>
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
             </div>
-            <span className="text-[10px] font-medium">提交</span>
+            <span className="text-[10px] font-medium">{language === 'zh' ? '提交' : 'Submit'}</span>
           </Link>
+          <button
+            onClick={toggleLanguage}
+            className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl text-gray-400 dark:text-gray-500 min-w-[56px]"
+          >
+            <div className="p-1.5 rounded-lg">
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
+            </div>
+            <span className="text-[10px] font-medium">{language === 'zh' ? 'EN' : '中'}</span>
+          </button>
           <button
             onClick={toggleTheme}
             className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl text-gray-400 dark:text-gray-500 min-w-[56px]"
@@ -102,7 +122,7 @@ export default function Navbar() {
             <div className="p-1.5 rounded-lg">
               <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
             </div>
-            <span className="text-[10px] font-medium">主题</span>
+            <span className="text-[10px] font-medium">{theme === 'dark' ? 'Light' : 'Dark'}</span>
           </button>
         </div>
       </nav>
