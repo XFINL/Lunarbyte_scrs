@@ -2,27 +2,27 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { Send, CheckCircle } from 'lucide-react';
 import { useStore } from '@/store';
-import { categories } from '@/data/mock';
 import GlassCard from '@/components/GlassCard';
 
 export default function Submit() {
   const navigate = useNavigate();
-  const { submitSite } = useStore();
+  const { categories, submitSite } = useStore();
   const [submitted, setSubmitted] = useState(false);
   const [form, setForm] = useState({
     name: '',
     url: '',
     description: '',
     categoryId: '',
-    tags: '',
     email: '',
   });
+  const [isOther, setIsOther] = useState(false);
+  const [customCategory, setCustomCategory] = useState('');
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     submitSite({
       ...form,
-      tags: form.tags.split(',').map((t) => t.trim()).filter(Boolean),
+      customCategory: isOther ? customCategory : undefined,
     });
     setSubmitted(true);
     setTimeout(() => navigate('/'), 2000);
@@ -47,37 +47,36 @@ export default function Submit() {
 
       <GlassCard hover={false} className="p-6 md:p-8">
         <form onSubmit={handleSubmit} className="space-y-5">
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-gray-500 dark:text-gray-400">站点名称 *</label>
-              <input
-                required
-                value={form.name}
-                onChange={(e) => setForm({ ...form, name: e.target.value })}
-                placeholder="ChatGPT"
-                className="w-full h-10 px-4 rounded-xl bg-white/80 dark:bg-white/10
-                  border border-black/10 dark:border-white/10 text-black dark:text-white
-                  placeholder-gray-400 dark:placeholder-gray-500 text-sm outline-none
-                  focus:border-black/30 dark:focus:border-white/30 transition-colors"
-              />
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-gray-500 dark:text-gray-400">网站 URL *</label>
-              <input
-                required
-                value={form.url}
-                onChange={(e) => setForm({ ...form, url: e.target.value })}
-                placeholder="https://example.com"
-                className="w-full h-10 px-4 rounded-xl bg-white/80 dark:bg-white/10
-                  border border-black/10 dark:border-white/10 text-black dark:text-white
-                  placeholder-gray-400 dark:placeholder-gray-500 text-sm outline-none
-                  focus:border-black/30 dark:focus:border-white/30 transition-colors"
-              />
-            </div>
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-gray-500 dark:text-gray-400">网站名称 *</label>
+            <input
+              required
+              value={form.name}
+              onChange={(e) => setForm({ ...form, name: e.target.value })}
+              placeholder="ChatGPT"
+              className="w-full h-10 px-4 rounded-xl bg-white/80 dark:bg-white/10
+                border border-black/10 dark:border-white/10 text-black dark:text-white
+                placeholder-gray-400 dark:placeholder-gray-500 text-sm outline-none
+                focus:border-black/30 dark:focus:border-white/30 transition-colors"
+            />
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-gray-500 dark:text-gray-400">站点描述 *</label>
+            <label className="text-xs font-medium text-gray-500 dark:text-gray-400">域名地址 *</label>
+            <input
+              required
+              value={form.url}
+              onChange={(e) => setForm({ ...form, url: e.target.value })}
+              placeholder="https://example.com"
+              className="w-full h-10 px-4 rounded-xl bg-white/80 dark:bg-white/10
+                border border-black/10 dark:border-white/10 text-black dark:text-white
+                placeholder-gray-400 dark:placeholder-gray-500 text-sm outline-none
+                focus:border-black/30 dark:focus:border-white/30 transition-colors"
+            />
+          </div>
+
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-gray-500 dark:text-gray-400">网站介绍 *</label>
             <textarea
               required
               value={form.description}
@@ -91,39 +90,43 @@ export default function Submit() {
             />
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 md:gap-5">
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-gray-500 dark:text-gray-400">分类 *</label>
-              <select
-                required
-                value={form.categoryId}
-                onChange={(e) => setForm({ ...form, categoryId: e.target.value })}
-                className="w-full h-10 px-4 rounded-xl bg-white/80 dark:bg-white/10
-                  border border-black/10 dark:border-white/10 text-black dark:text-white text-sm
-                  outline-none focus:border-black/30 dark:focus:border-white/30 transition-colors appearance-none"
-              >
-                <option value="" disabled>选择分类</option>
-                {categories.map((cat) => (
-                  <option key={cat.id} value={cat.id} className="bg-white dark:bg-gray-900">{cat.name}</option>
-                ))}
-              </select>
-            </div>
-            <div className="space-y-1.5">
-              <label className="text-xs font-medium text-gray-500 dark:text-gray-400">标签（逗号分隔）</label>
+          <div className="space-y-1.5">
+            <label className="text-xs font-medium text-gray-500 dark:text-gray-400">分类 *</label>
+            <select
+              required
+              value={form.categoryId}
+              onChange={(e) => {
+                const val = e.target.value;
+                setForm({ ...form, categoryId: val });
+                setIsOther(val === '__other__');
+                if (val !== '__other__') setCustomCategory('');
+              }}
+              className="w-full h-10 px-4 rounded-xl bg-white/80 dark:bg-white/10
+                border border-black/10 dark:border-white/10 text-black dark:text-white text-sm
+                outline-none focus:border-black/30 dark:focus:border-white/30 transition-colors appearance-none"
+            >
+              <option value="" disabled>选择分类</option>
+              {categories.map((cat) => (
+                <option key={cat.id} value={cat.id} className="bg-white dark:bg-gray-900">{cat.name}</option>
+              ))}
+              <option value="__other__" className="bg-white dark:bg-gray-900">其他</option>
+            </select>
+            {isOther && (
               <input
-                value={form.tags}
-                onChange={(e) => setForm({ ...form, tags: e.target.value })}
-                placeholder="AI, 对话, 写作"
-                className="w-full h-10 px-4 rounded-xl bg-white/80 dark:bg-white/10
+                required
+                value={customCategory}
+                onChange={(e) => setCustomCategory(e.target.value)}
+                placeholder="输入自定义分类名称"
+                className="mt-2 w-full h-10 px-4 rounded-xl bg-white/80 dark:bg-white/10
                   border border-black/10 dark:border-white/10 text-black dark:text-white
                   placeholder-gray-400 dark:placeholder-gray-500 text-sm outline-none
                   focus:border-black/30 dark:focus:border-white/30 transition-colors"
               />
-            </div>
+            )}
           </div>
 
           <div className="space-y-1.5">
-            <label className="text-xs font-medium text-gray-500 dark:text-gray-400">邮箱 *（用于审核通知）</label>
+            <label className="text-xs font-medium text-gray-500 dark:text-gray-400">联系邮箱 *</label>
             <input
               required
               type="email"

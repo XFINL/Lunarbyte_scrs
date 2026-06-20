@@ -60,14 +60,35 @@ export const useStore = create<Store>((set, get) => ({
   logout: () => set({ isAuthenticated: false }),
 
   submitSite: (form) => {
+    let categoryId = form.categoryId;
+    const customName = form.customCategory;
+
+    if (customName) {
+      const newId = `custom_${Date.now()}`;
+      categoryId = newId;
+      set((s) => ({
+        categories: [
+          ...s.categories,
+          {
+            id: newId,
+            name: customName,
+            icon: '',
+            description: '',
+            siteCount: 0,
+            color: '#000000',
+          },
+        ],
+      }));
+    }
+
     const newSite: Site = {
       id: String(Date.now()),
       name: form.name,
       url: form.url,
       description: form.description,
-      logo: form.logo || `https://www.google.com/s2/favicons?domain=${new URL(form.url).hostname}&sz=64`,
-      categoryId: form.categoryId,
-      tags: form.tags,
+      logo: `https://www.google.com/s2/favicons?domain=${new URL(form.url).hostname}&sz=64`,
+      categoryId,
+      tags: [],
       status: 'pending',
       createdAt: new Date().toISOString().split('T')[0],
       visitCount: 0,

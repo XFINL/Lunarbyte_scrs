@@ -27,7 +27,6 @@ export interface SubmitForm {
   url: string;
   description: string;
   categoryId: string;
-  tags: string[];
-  logo?: string;
   email: string;
+  customCategory?: string;
 }
