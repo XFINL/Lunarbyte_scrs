@@ -6,6 +6,7 @@ import Categories from "./pages/Categories";
 import CategoryDetail from "./pages/CategoryDetail";
 import Detail from "./pages/Detail";
 import Submit from "./pages/Submit";
+import AdminLogin from "./pages/admin/Login";
 import AdminLayout from "./pages/admin/AdminLayout";
 import AdminSites from "./pages/admin/Sites";
 import AdminCategories from "./pages/admin/Categories";
@@ -22,12 +23,13 @@ export default function App() {
           <Route path="/category/:id" element={<CategoryDetail />} />
           <Route path="/detail/:id" element={<Detail />} />
           <Route path="/submit" element={<Submit />} />
-          <Route path="/admin" element={<AdminLayout />}>
-            <Route index element={<Navigate to="/admin/sites" replace />} />
-            <Route path="sites" element={<AdminSites />} />
-            <Route path="categories" element={<AdminCategories />} />
-            <Route path="reviews" element={<AdminReviews />} />
-          </Route>
+        </Route>
+        <Route path="/admin/login" element={<AdminLogin />} />
+        <Route path="/admin" element={<AdminLayout />}>
+          <Route index element={<Navigate to="/admin/sites" replace />} />
+          <Route path="sites" element={<AdminSites />} />
+          <Route path="categories" element={<AdminCategories />} />
+          <Route path="reviews" element={<AdminReviews />} />
         </Route>
       </Routes>
     </Router>

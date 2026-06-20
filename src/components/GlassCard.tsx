@@ -13,8 +13,8 @@ export default function GlassCard({ children, className, hover = true, style }: 
     <div
       style={style}
       className={cn(
-        'rounded-2xl border border-white/10 dark:border-white/10 border-black/5 bg-white/5 dark:bg-white/5 bg-white/70 backdrop-blur-xl transition-all duration-300',
-        hover && 'hover:scale-[1.02] hover:shadow-xl hover:shadow-cyan-500/10 hover:border-cyan-400/30',
+        'rounded-2xl border border-black/10 dark:border-white/10 bg-white/70 dark:bg-white/5 backdrop-blur-xl transition-all duration-300',
+        hover && 'hover:scale-[1.02] hover:shadow-lg hover:shadow-black/10 dark:hover:shadow-white/5',
         className
       )}
     >

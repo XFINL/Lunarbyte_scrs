@@ -14,8 +14,8 @@ export default function CategoryDetail() {
   if (!category) {
     return (
       <GlassCard hover={false} className="p-12 text-center mt-8">
-        <p className="text-gray-400">分类未找到</p>
-        <Link to="/categories" className="text-cyan-400 text-sm mt-2 inline-block hover:underline">
+        <p className="text-gray-500 dark:text-gray-400">分类未找到</p>
+        <Link to="/categories" className="text-black dark:text-white text-sm mt-2 inline-block hover:opacity-60">
           返回分类列表
         </Link>
       </GlassCard>
@@ -27,20 +27,17 @@ export default function CategoryDetail() {
       <div className="flex items-center gap-4">
         <Link
           to="/categories"
-          className="p-2 rounded-xl bg-white/10 dark:bg-white/5 text-gray-400 hover:text-gray-600 dark:hover:text-gray-300 transition-colors"
+          className="p-2 rounded-xl bg-black/5 dark:bg-white/10 text-gray-400 hover:text-black dark:hover:text-white transition-colors"
         >
           <ArrowLeft size={18} />
         </Link>
         <div>
-          <div className="flex items-center gap-2">
-            <span className="text-2xl">{category.icon}</span>
-            <h1 className="text-2xl font-bold text-gray-900 dark:text-white">{category.name}</h1>
-          </div>
+          <h1 className="text-xl md:text-2xl font-bold text-black dark:text-white">{category.name}</h1>
           <p className="text-sm text-gray-500 dark:text-gray-400 mt-1">{category.description}</p>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      <div className="grid grid-cols-2 md:grid-cols-4 gap-3 md:gap-4">
         {sites.map((site, i) => (
           <SiteCard key={site.id} site={site} index={i} />
         ))}

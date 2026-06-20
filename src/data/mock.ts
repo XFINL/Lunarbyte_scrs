@@ -1,14 +1,14 @@
 import type { Category, Site } from '@/types';
 
 export const categories: Category[] = [
-  { id: '1', name: 'AI工具', icon: '🤖', description: '人工智能相关工具与平台', siteCount: 12, color: '#00d4ff' },
-  { id: '2', name: '设计资源', icon: '🎨', description: 'UI/UX 设计素材与工具', siteCount: 10, color: '#7b2ff7' },
-  { id: '3', name: '开发工具', icon: '💻', description: '开发者必备工具与平台', siteCount: 15, color: '#ff6b35' },
-  { id: '4', name: '学习资源', icon: '📚', description: '在线学习与知识平台', siteCount: 8, color: '#ffd60a' },
-  { id: '5', name: '产品设计', icon: '📐', description: '产品设计工具与社区', siteCount: 7, color: '#06d6a0' },
-  { id: '6', name: '资讯媒体', icon: '📰', description: '科技资讯与媒体平台', siteCount: 9, color: '#ef476f' },
-  { id: '7', name: '效率工具', icon: '⚡', description: '提升工作效率的在线工具', siteCount: 11, color: '#118ab2' },
-  { id: '8', name: '社区论坛', icon: '💬', description: '开发者与设计师社区', siteCount: 6, color: '#073b4c' },
+  { id: '1', name: 'AI工具', icon: '🤖', description: '人工智能相关工具与平台', siteCount: 12, color: '#000000' },
+  { id: '2', name: '设计资源', icon: '🎨', description: 'UI/UX 设计素材与工具', siteCount: 10, color: '#000000' },
+  { id: '3', name: '开发工具', icon: '💻', description: '开发者必备工具与平台', siteCount: 15, color: '#000000' },
+  { id: '4', name: '学习资源', icon: '📚', description: '在线学习与知识平台', siteCount: 8, color: '#000000' },
+  { id: '5', name: '产品设计', icon: '📐', description: '产品设计工具与社区', siteCount: 7, color: '#000000' },
+  { id: '6', name: '资讯媒体', icon: '📰', description: '科技资讯与媒体平台', siteCount: 9, color: '#000000' },
+  { id: '7', name: '效率工具', icon: '⚡', description: '提升工作效率的在线工具', siteCount: 11, color: '#000000' },
+  { id: '8', name: '社区论坛', icon: '💬', description: '开发者与设计师社区', siteCount: 6, color: '#000000' },
 ];
 
 export const sites: Site[] = [

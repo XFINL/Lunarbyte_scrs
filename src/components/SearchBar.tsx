@@ -17,11 +17,11 @@ export default function SearchBar() {
           onChange={(e) => setSearchQuery(e.target.value)}
           placeholder="搜索站点名称、描述或标签..."
           className="w-full h-12 pl-11 pr-10 rounded-2xl
-            bg-white/10 dark:bg-white/5 backdrop-blur-xl
-            border border-white/20 dark:border-white/10 border-black/10
-            text-gray-900 dark:text-white placeholder-gray-400 dark:placeholder-gray-500
+            bg-white/80 dark:bg-white/10 backdrop-blur-xl
+            border border-black/10 dark:border-white/10
+            text-black dark:text-white placeholder-gray-400 dark:placeholder-gray-500
             outline-none transition-all duration-300
-            focus:border-cyan-400/50 focus:shadow-lg focus:shadow-cyan-500/10
+            focus:border-black/30 dark:focus:border-white/30 focus:shadow-lg
             text-sm"
         />
         {searchQuery && (

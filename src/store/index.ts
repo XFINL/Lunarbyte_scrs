@@ -8,6 +8,7 @@ interface Store {
   searchQuery: string;
   selectedCategory: string | null;
   theme: 'dark' | 'light';
+  isAuthenticated: boolean;
   setSearchQuery: (query: string) => void;
   setSelectedCategory: (id: string | null) => void;
   toggleTheme: () => void;
@@ -17,6 +18,8 @@ interface Store {
   deleteSite: (id: string) => void;
   addCategory: (category: Category) => void;
   deleteCategory: (id: string) => void;
+  login: (password: string) => boolean;
+  logout: () => void;
   getFilteredSites: () => Site[];
   getSitesByCategory: (categoryId: string) => Site[];
   getSiteById: (id: string) => Site | undefined;
@@ -29,6 +32,7 @@ export const useStore = create<Store>((set, get) => ({
   searchQuery: '',
   selectedCategory: null,
   theme: 'dark',
+  isAuthenticated: false,
 
   setSearchQuery: (query) => set({ searchQuery: query }),
   setSelectedCategory: (id) => set({ selectedCategory: id }),
@@ -39,6 +43,16 @@ export const useStore = create<Store>((set, get) => ({
     document.documentElement.classList.remove('dark', 'light');
     document.documentElement.classList.add(next);
   },
+
+  login: (password) => {
+    if (password === 'admin123') {
+      set({ isAuthenticated: true });
+      return true;
+    }
+    return false;
+  },
+
+  logout: () => set({ isAuthenticated: false }),
 
   submitSite: (form) => {
     const newSite: Site = {
@@ -81,15 +95,23 @@ export const useStore = create<Store>((set, get) => ({
     set((s) => ({ categories: s.categories.filter((c) => c.id !== id) })),
 
   getFilteredSites: () => {
-    const { sites, searchQuery } = get();
-    if (!searchQuery) return sites.filter((s) => s.status === 'approved');
-    return sites.filter(
-      (s) =>
-        s.status === 'approved' &&
-        (s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
+    const { sites, searchQuery, selectedCategory } = get();
+    let filtered = sites.filter((s) => s.status === 'approved');
+
+    if (selectedCategory) {
+      filtered = filtered.filter((s) => s.categoryId === selectedCategory);
+    }
+
+    if (searchQuery) {
+      filtered = filtered.filter(
+        (s) =>
+          s.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
           s.description.toLowerCase().includes(searchQuery.toLowerCase()) ||
-          s.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase())))
-    );
+          s.tags.some((t) => t.toLowerCase().includes(searchQuery.toLowerCase()))
+      );
+    }
+
+    return filtered;
   },
 
   getSitesByCategory: (categoryId) =>

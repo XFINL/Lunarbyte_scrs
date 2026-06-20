@@ -1,16 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import { Home, Search, Grid3X3, PlusSquare, Settings, Moon, Sun } from 'lucide-react';
 import { useStore } from '@/store';
 import { cn } from '@/lib/utils';
-
-const navItems = [
-  { path: '/', label: '首页', icon: Home },
-  { path: '/search', label: '搜索', icon: Search },
-  { path: '/categories', label: '分类', icon: Grid3X3 },
-  { path: '/submit', label: '提交', icon: PlusSquare },
-  { path: '/admin', label: '管理', icon: Settings },
-];
 
 export default function Navbar() {
   const location = useLocation();
@@ -25,46 +16,47 @@ export default function Navbar() {
 
   return (
     <>
-      {/* Desktop navbar - floating on top */}
+      {/* Desktop navbar */}
       <nav
         className={cn(
           'hidden md:flex fixed top-0 left-1/2 -translate-x-1/2 z-50 mt-4',
           'rounded-2xl px-2 py-1.5',
           'bg-white/10 dark:bg-white/5 backdrop-blur-2xl',
-          'border border-white/20 dark:border-white/10 border-black/10',
+          'border border-black/10 dark:border-white/10',
           'shadow-2xl shadow-black/10',
           'transition-all duration-300',
-          scrolled && 'mt-2 shadow-lg shadow-cyan-500/5'
+          scrolled && 'mt-2'
         )}
       >
         <div className="flex items-center gap-1">
-          {navItems.map((item) => {
-            const isActive = item.path === '/'
-              ? location.pathname === '/'
-              : location.pathname.startsWith(item.path);
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={cn(
-                  'flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200',
-                  isActive
-                    ? 'bg-white/20 dark:bg-white/15 text-gray-900 dark:text-white shadow-sm'
-                    : 'text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/10 dark:hover:bg-white/10'
-                )}
-              >
-                <Icon size={18} />
-                <span>{item.label}</span>
-              </Link>
-            );
-          })}
+          <Link
+            to="/"
+            className={cn(
+              'flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200',
+              location.pathname === '/'
+                ? 'bg-black/10 dark:bg-white/15 text-black dark:text-white'
+                : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10'
+            )}
+          >
+            首页
+          </Link>
+          <Link
+            to="/submit"
+            className={cn(
+              'flex items-center gap-2 px-4 py-2 rounded-xl text-sm font-medium transition-all duration-200',
+              location.pathname === '/submit'
+                ? 'bg-black/10 dark:bg-white/15 text-black dark:text-white'
+                : 'text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10'
+            )}
+          >
+            提交
+          </Link>
           <button
             onClick={toggleTheme}
-            className="ml-2 p-2 rounded-xl text-gray-500 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white hover:bg-white/10 dark:hover:bg-white/10 transition-all duration-200"
+            className="ml-2 p-2 rounded-xl text-gray-500 dark:text-gray-400 hover:text-black dark:hover:text-white hover:bg-black/5 dark:hover:bg-white/10 transition-all duration-200"
             aria-label="切换主题"
           >
-            {theme === 'dark' ? <Sun size={18} /> : <Moon size={18} />}
+            {theme === 'dark' ? '明亮' : '暗色'}
           </button>
         </div>
       </nav>
@@ -75,43 +67,40 @@ export default function Navbar() {
           'md:hidden fixed bottom-0 left-0 right-0 z-50',
           'px-3 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]',
           'bg-white/10 dark:bg-white/5 backdrop-blur-2xl',
-          'border-t border-white/20 dark:border-white/10 border-black/10'
+          'border-t border-black/10 dark:border-white/10'
         )}
       >
         <div className="flex items-center justify-around">
-          {navItems.map((item) => {
-            const isActive = item.path === '/'
-              ? location.pathname === '/'
-              : location.pathname.startsWith(item.path);
-            const Icon = item.icon;
-            return (
-              <Link
-                key={item.path}
-                to={item.path}
-                className={cn(
-                  'flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all duration-200 min-w-[56px]',
-                  isActive
-                    ? 'text-gray-900 dark:text-white'
-                    : 'text-gray-400 dark:text-gray-500'
-                )}
-              >
-                <div className={cn(
-                  'p-1.5 rounded-lg transition-all duration-200',
-                  isActive && 'bg-white/20 dark:bg-white/15'
-                )}>
-                  <Icon size={20} />
-                </div>
-                <span className="text-[10px] font-medium">{item.label}</span>
-              </Link>
-            );
-          })}
+          <Link
+            to="/"
+            className={cn(
+              'flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all duration-200 min-w-[56px]',
+              location.pathname === '/' ? 'text-black dark:text-white' : 'text-gray-400 dark:text-gray-500'
+            )}
+          >
+            <div className={cn('p-1.5 rounded-lg', location.pathname === '/' && 'bg-black/10 dark:bg-white/15')}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="m3 9 9-7 9 7v11a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/><polyline points="9 22 9 12 15 12 15 22"/></svg>
+            </div>
+            <span className="text-[10px] font-medium">首页</span>
+          </Link>
+          <Link
+            to="/submit"
+            className={cn(
+              'flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl transition-all duration-200 min-w-[56px]',
+              location.pathname === '/submit' ? 'text-black dark:text-white' : 'text-gray-400 dark:text-gray-500'
+            )}
+          >
+            <div className={cn('p-1.5 rounded-lg', location.pathname === '/submit' && 'bg-black/10 dark:bg-white/15')}>
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>
+            </div>
+            <span className="text-[10px] font-medium">提交</span>
+          </Link>
           <button
             onClick={toggleTheme}
             className="flex flex-col items-center gap-0.5 px-3 py-1.5 rounded-xl text-gray-400 dark:text-gray-500 min-w-[56px]"
-            aria-label="切换主题"
           >
             <div className="p-1.5 rounded-lg">
-              {theme === 'dark' ? <Sun size={20} /> : <Moon size={20} />}
+              <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"><circle cx="12" cy="12" r="4"/><path d="M12 2v2"/><path d="M12 20v2"/><path d="m4.93 4.93 1.41 1.41"/><path d="m17.66 17.66 1.41 1.41"/><path d="M2 12h2"/><path d="M20 12h2"/><path d="m6.34 17.66-1.41 1.41"/><path d="m19.07 4.93-1.41 1.41"/></svg>
             </div>
             <span className="text-[10px] font-medium">主题</span>
           </button>
