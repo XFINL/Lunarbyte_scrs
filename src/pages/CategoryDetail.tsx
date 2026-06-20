@@ -15,8 +15,8 @@ export default function CategoryDetail() {
     return (
       <GlassCard hover={false} className="p-12 text-center mt-8">
         <p className="text-gray-500 dark:text-gray-400">分类未找到</p>
-        <Link to="/categories" className="text-black dark:text-white text-sm mt-2 inline-block hover:opacity-60">
-          返回分类列表
+        <Link to="/" className="text-black dark:text-white text-sm mt-2 inline-block hover:opacity-60">
+          返回首页
         </Link>
       </GlassCard>
     );
@@ -26,7 +26,7 @@ export default function CategoryDetail() {
     <div className="space-y-8 pt-4">
       <div className="flex items-center gap-4">
         <Link
-          to="/categories"
+          to="/"
           className="p-2 rounded-xl bg-black/5 dark:bg-white/10 text-gray-400 hover:text-black dark:hover:text-white transition-colors"
         >
           <ArrowLeft size={18} />
